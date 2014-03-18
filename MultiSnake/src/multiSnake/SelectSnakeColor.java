@@ -38,9 +38,9 @@ public class SelectSnakeColor implements ActionListener
 		return true;
 	}
 	
-	private void updateTaken()
+/*	private void updateTaken()
 	{
 		
 	}
-
+*/
 }

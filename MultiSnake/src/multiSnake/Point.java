@@ -36,6 +36,13 @@ public class Point {  // represents a block/location on the screen/image
 	  {
 		  return "("+row+", "+col+")";
 	  }
+	  
+	  public Point toPoint(String point){
+		  String[] pointInfo = point.split("");
+		  int row = Integer.parseInt(pointInfo[1]);
+		  int col = Integer.parseInt(pointInfo[3]);
+		  return new Point(row, col);
+	  }
 }
 
 /*

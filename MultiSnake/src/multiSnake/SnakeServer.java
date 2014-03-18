@@ -3,30 +3,44 @@ import java.net.*;
 import java.io.*;
 
 
-public class SnakeServer {
+public class SnakeServer extends Thread {
 	private ServerSocket server;
 	private static Player me;
 	
-	public SnakeServer(int port, Player who) throws IOException{
-		server = new ServerSocket(port);
+	public SnakeServer(Player who) throws IOException{
+		server = new ServerSocket(8888);
 		me = who;
+		
+		//this is not being set up properly.
+		//should the server be set up as the application launches?
+		//then the join game button should attempt to connect to the server? how?
+		//me = who;
 		System.out.println("Server IP address " + server.getInetAddress() + " has connected to OnlineSnake");
 	}
 	
-	public void listen() throws IOException{
+	@Override
+	public void run(){
 		for(;;){
-			Socket s = server.accept();
-			InetAddress address = s.getInetAddress();
-			SnakeThread snakeThread = new SnakeThread(s, me);
-			snakeThread.addAddress(address);
-			
-			snakeThread.start();
+			System.out.println("Server created and listening....");
+			Socket s;
+			try {
+				s = server.accept();
+				System.out.println("I have accepted a request");
+				System.out.println("Processing...");
+				InetAddress address = s.getInetAddress();
+				UpdateReceiver update = new UpdateReceiver(s, me);
+				update.start();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Well, whatever...");
 			}
+		}
 	}
 	
 	public static void main(String[] args) throws IOException{
-		SnakeServer s = new SnakeServer(Integer.parseInt(args[0]), me);
-		s.listen();
+		SnakeServer s = new SnakeServer(me);
+		s.start();
 	}
 	
 }

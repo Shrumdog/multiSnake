@@ -5,12 +5,14 @@ public class MapBuffer {
 	//more static CONSTANTS for convenience	  
 	private final static int SNAKE_SEGMENT = -1, WALL = -2;
 	private int [][] screen;
+	private int size;
 	
 	//The values in ScreenBuufer's screen array are either SNAKE_SEGMENT, WALL, 
 	// or the index value where the point can be found in the freePool
 	//  
 	MapBuffer( int rows, int columns ) {  //THIS IS COMPLETE
 		screen = new int[rows][columns]; 
+		size = rows;
 		//a two dimensional array is a "long" one-dimensional array but the the two
 		//  indices [row] [col] internally do the arithmetic to find the correct
 		//  associated value in the "hidden" long array
@@ -41,6 +43,7 @@ public class MapBuffer {
 
 	public boolean isOccupied( Point p ) { 
 		//return whether this point corresponds to a Snake Segment or Wall location
+		if(p.getRow() > size - 1 || p.getCol() > size - 1){ return true; }
 		return (screen[p.getRow()][p.getCol()] == WALL || screen[p.getRow()][p.getCol()] == SNAKE_SEGMENT);
 	}
 

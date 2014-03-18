@@ -10,13 +10,13 @@ public class ControlPanel extends JPanel
 	private MiniMap miniMap;
 	private SnakeOptions options;
 	
-	public ControlPanel(Player player, MasterMap trueMap)
+	public ControlPanel(Player player, MasterMap trueMap, Joystick jstick)
 	{
 		setLayout(new GridLayout(2,1));
 		options = new SnakeOptions(player);
 		
 		JPanel container = new JPanel();
-		container.add(new Buttons(player, options));
+		container.add(new Buttons(player, options, jstick));
 		container.add(options);
 		add(container);
 		

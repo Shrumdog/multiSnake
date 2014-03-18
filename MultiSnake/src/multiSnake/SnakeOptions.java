@@ -72,6 +72,7 @@ public class SnakeOptions extends JPanel
 		JButton red = new JButton();
 		red.setPreferredSize(buttonSize);
 		red.setBackground(Color.RED);
+		red.setOpaque(true);	//Required in order to show up on Mac OS
 		red.addActionListener(new SelectSnakeColor(Color.RED, me));
 		return red;
 	}
@@ -80,6 +81,7 @@ public class SnakeOptions extends JPanel
 	{
 		JButton blue = new JButton();
 		blue.setBackground(Color.BLUE);
+		blue.setOpaque(true);
 		blue.addActionListener(new SelectSnakeColor(Color.BLUE, me));
 		return blue;
 	}
@@ -88,6 +90,7 @@ public class SnakeOptions extends JPanel
 	{
 		JButton green = new JButton();
 		green.setBackground(Color.GREEN);
+		green.setOpaque(true);
 		green.addActionListener(new SelectSnakeColor(Color.GREEN, me));
 		return green;
 	}
@@ -96,6 +99,7 @@ public class SnakeOptions extends JPanel
 	{
 		JButton orange = new JButton();
 		orange.setBackground(Color.ORANGE);
+		orange.setOpaque(true);
 		orange.addActionListener(new SelectSnakeColor(Color.ORANGE, me));
 		return orange;
 	}
@@ -104,6 +108,7 @@ public class SnakeOptions extends JPanel
 	{
 		JButton cyan = new JButton();
 		cyan.setBackground(Color.CYAN);
+		cyan.setOpaque(true);
 		cyan.addActionListener(new SelectSnakeColor(Color.CYAN, me));
 		return cyan;
 	}
@@ -112,6 +117,7 @@ public class SnakeOptions extends JPanel
 	{
 		JButton magenta = new JButton();
 		magenta.setBackground(Color.MAGENTA);
+		magenta.setOpaque(true);
 		magenta.addActionListener(new SelectSnakeColor(Color.MAGENTA, me));
 		return magenta;
 	}

@@ -2,6 +2,7 @@ package multiSnake;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -11,11 +12,10 @@ public class GUI extends JFrame
 {
 	private VisualMap playScreen;
 	private Dimension screenSize;
-	private Player me;
+	private static Player me;
 	private MasterMap trueMap;
 	
-	public GUI()
-	{
+	public GUI(){
 		super("Multiplayer Snake");
 		screenSize = new Dimension(500, 500);
 		trueMap = new MasterMap();
@@ -27,14 +27,18 @@ public class GUI extends JFrame
 		setLayout(new FlowLayout());
 		
 		playScreen.setPreferredSize(screenSize);
-		playScreen.addKeyListener(me.connectListener());
+		Joystick jstick = me.connectListener();
+		playScreen.addKeyListener(jstick);
 		
 		add(playScreen);
-		add(new ControlPanel(me, trueMap));
+		add(new ControlPanel(me, trueMap, jstick));
+		
 	}
 	
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) throws IOException{
 		new GUI().setVisible(true);
+		SnakeServer snakeServer = new SnakeServer(me);
+		snakeServer.start();
+
 	}
 }
