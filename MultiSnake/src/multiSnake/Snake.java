@@ -33,6 +33,17 @@ public class Snake {
 		tail = tail.getNext();
 		return temp;
 	}
+	
+	@Override
+	public String toString(){
+		SnakeSegment curSeg = start();
+		String result = "";
+		while(moreElements()){
+			result += curSeg.toString();
+			curSeg = nextElement();
+		}
+		return result;
+	}
 
 	public boolean empty() { //returns whether the snake body is empty;
 		return (head != null);
@@ -45,8 +56,9 @@ public class Snake {
 	// the data structure WITHOUT KNOWING ITS UNDERLYING
 	// STRUCTURE
 
-	public void start() { //set iter to the "head" of Snake
+	public SnakeSegment start() { //set iter to the "head" of Snake
 		iter = tail;
+		return iter;
 	}
 
 	public SnakeSegment nextElement() {

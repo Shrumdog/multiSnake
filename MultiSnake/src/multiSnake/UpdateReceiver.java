@@ -35,10 +35,14 @@ public class UpdateReceiver extends Thread{
 	public void run(){
 		try{
 			BufferedReader input = new BufferedReader (new InputStreamReader(socket.getInputStream()));
-			String infoToParse = input.toString();
+			String infoToParse = "";
+			infoToParse += input.readLine();
+			
+			System.out.println("input from the input stream: " + infoToParse);
 			Point munchiePoint = parseInputForMunchie(infoToParse);
 			Snake snake = parseInputForSnake(infoToParse);
 			MasterMap map = me.getTrueMap();
+			
 			map.addSnake(snake);
 			map.swapMunchie(snake, munchiePoint);
 		}
@@ -73,7 +77,6 @@ public class UpdateReceiver extends Thread{
 	}
 
 	public Point toPoint(String point){
-		System.out.println("Length of the point that we received in String form: " + point.length());
 		String[] pointInfo = point.split("");
 		int row = Integer.parseInt(pointInfo[1]);
 		int col = Integer.parseInt(pointInfo[3]);

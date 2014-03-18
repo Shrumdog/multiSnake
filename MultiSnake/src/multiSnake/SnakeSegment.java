@@ -13,6 +13,10 @@ public class SnakeSegment {
     p = new Point( row, col );
     next = null;
   }
+  
+  public String toString(){
+	  return p.toString();
+  }
 
   public Point getPoint() { return p; }
   public void setNext( SnakeSegment ws ) { next = ws; }

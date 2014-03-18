@@ -26,9 +26,12 @@ public class UpdateSender extends Thread {
 			PrintWriter writer = new PrintWriter (new OutputStreamWriter(socket.getOutputStream()));
 			StringBuilder infoToSend = new StringBuilder();
 			String stringMunchiePoint = getMunchiePoint();
+			System.out.println("calling getSnake()");
 			String stringSnake = getSnake();
+			System.out.println("My stringy snake equals: " + stringSnake);
 			infoToSend.append(stringMunchiePoint);
 			infoToSend.append(stringSnake);
+			writer.append(infoToSend);
 			writer.flush();
 			socket.close();
 			
@@ -42,15 +45,12 @@ public class UpdateSender extends Thread {
 	
 	public String getMunchiePoint(){
 		ConcurrentHashMap<Color, Point> munchieOwners = me.getTrueMap().getMunchieOwners();
-		System.out.println("the color of the point is: " + me.getTrueMap().getMySnake().color.toString());
-		Point p = munchieOwners.get(me.getTrueMap().getMySnake().color.toString());
-		System.out.println("The Point I'm about to put into the outputstream is: " + p);
+		Point p = munchieOwners.get(me.getTrueMap().getMySnake().color);
 		return p.toString();
 	}
 	
 	public String getSnake(){
 		Snake mySnake = me.getTrueMap().getMySnake();
-		System.out.println("The snake I'm about to put into the outputstream is: " + me);
 		return mySnake.toString();
 	}
 	
