@@ -1,5 +1,8 @@
 package multiSnake;
 
+import gui.Joystick;
+import gui.VisualMap;
+
 import java.awt.Color;
 import java.awt.event.KeyListener;
 
@@ -46,6 +49,10 @@ public class Player
 	public MasterMap getTrueMap()
 	{
 		return fakeMap.getTrueMap();
+	}
+	
+	public VisualMap getVisualMap(){
+		return fakeMap;
 	}
 
 	public Joystick connectListener()

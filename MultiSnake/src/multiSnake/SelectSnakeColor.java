@@ -10,7 +10,6 @@ public class SelectSnakeColor implements ActionListener
 {
 	private Player me;
 	private Color colorSelect;
-//	private ArrayList<Color> colorsTaken;
 	
 	public SelectSnakeColor(Color c, Player player)
 	{
@@ -28,19 +27,7 @@ public class SelectSnakeColor implements ActionListener
 	
 	private boolean available()
 	{
-/*		updateTaken();
-		for(Color c: colorsTaken)
-		{
-			if(colorSelect.equals(c))
-				return false;
-		}
-*/
 		return true;
 	}
 	
-/*	private void updateTaken()
-	{
-		
-	}
-*/
 }

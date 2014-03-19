@@ -34,7 +34,7 @@ public class Point {  // represents a block/location on the screen/image
 	  @Override
 	  public String toString()
 	  {
-		  return "("+row+", "+col+")";
+		  return "("+row+","+col+") ";
 	  }
 	  
 	  public Point toPoint(String point){

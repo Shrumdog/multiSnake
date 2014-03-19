@@ -8,27 +8,25 @@ public class Snake {
 	public Color color;
 	public boolean isAlive;
 
-	Snake() {
+	public Snake() {
 		head = tail = iter = null;
 		isAlive = true;
 		color = Color.GRAY;
 	}
 
-	Snake(Color c) {
+	public Snake(Color c) {
 		head = tail = iter = null;
 		isAlive = true;
 		color = c;
 	}
 
 	public void addToHead( SnakeSegment p ) {
-		// p becomes the new head OF THE SNAKE
 		if(head != null) { head.setNext(p); }
 		if(tail == null) { tail = head; }
 		head = p;
 	}
 
 	public SnakeSegment rmTail(){
-		//remove and return the tail OF THE SNAKE
 		SnakeSegment temp = tail;
 		tail = tail.getNext();
 		return temp;
@@ -45,18 +43,13 @@ public class Snake {
 		return result;
 	}
 
-	public boolean empty() { //returns whether the snake body is empty;
+	public boolean empty() { 
 		return (head != null);
 	}
-	public SnakeSegment getHead() { return head;} //returns the head of the SNAKE
+	public SnakeSegment getHead() { return head;}
 	public Color getColor() {return color;}
 
-	// The following three methods are iterator methods.
-	// This allows for an external agent to run through
-	// the data structure WITHOUT KNOWING ITS UNDERLYING
-	// STRUCTURE
-
-	public SnakeSegment start() { //set iter to the "head" of Snake
+	public SnakeSegment start() { 
 		iter = tail;
 		return iter;
 	}
@@ -94,7 +87,9 @@ public class Snake {
 			g.setColor(color.darker().darker());
 			Point segLoc = translate(seg.getPoint(), trueCenter, falseCenter, scale);
 			g.fillOval(segLoc.getCol(), segLoc.getRow(), scale, scale);
-			seg = nextElement();
+			if(moreElements()){
+				seg = nextElement();
+			}
 			g.setColor(color);
 			while(moreElements())
 			{
