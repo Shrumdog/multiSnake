@@ -42,7 +42,6 @@ public class MasterMap
 		munchieOwners = new ConcurrentHashMap<Color, Point>();
 		rand = new Random();
 		prevDir = 4;
-		Collections.synchronizedCollection(snakes);
 		for (int i = 1; i < SIZE; i++)
 			for (int j = 1; j < SIZE; j++)
 				makeFree(new Point(i, j));
@@ -314,7 +313,6 @@ public class MasterMap
 		Point m;
 		for (Snake s : snakes)
 		{
-			System.out.println(s);
 			c = s.getColor();
 			m = munchieOwners.get(c);
 			m = translate(m, trueCenter, falseCenter, scale);
