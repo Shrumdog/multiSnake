@@ -27,7 +27,7 @@ public class SnakeServer extends Thread {
 		for(;;){
 			//System.out.println("Server listening....");
 			Socket s;
-			if(js.getPlayerAddresses().size() > 1){
+//			if(js.getPlayerAddresses().size() > 1){
 				try {
 					s = server.accept();
 					System.out.println("I have accepted a request");
@@ -38,7 +38,7 @@ public class SnakeServer extends Thread {
 					e.printStackTrace();
 					System.out.println("Well, whatever...");
 				}
-			}
+//			}
 		}
 	}
 
