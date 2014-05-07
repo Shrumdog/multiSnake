@@ -58,9 +58,10 @@ public class MasterMap
 	public void addSnake(Snake snake){
 		if(!snake.color.equals(new Color(128, 128, 128))){
 			if(munchieOwners.containsKey(snake.getColor())){
-				for(Snake s : snakes){
-					if(s.color.equals(snake.color)){
-						snakes.remove(s);
+				for(int i=0; i<snakes.size(); i++){
+					Snake s = snakes.get(i);
+					if(snakes.get(i).color.equals(snake.color)){
+						snakes.remove(snakes.get(i));
 						snakes.add(snake);
 					}
 				}
@@ -74,7 +75,7 @@ public class MasterMap
 			}
 		}
 	}
-	
+
 	private void makeEffect()
 	{
 		effectivePool.clear();
@@ -151,13 +152,15 @@ public class MasterMap
 
 	private void swapEffect(Point p, int i)
 	{
-		if (i > effectivePool.size() - 1)
-		{
-			swapFree(p, i);
-			return;
+		if (i >= 0){
+			if (i >= effectivePool.size() - 1)
+			{
+				swapFree(p, i);
+				return;
+			}
+			effectivePool.set(i, p);
+			field.setValueAt(p, i);
 		}
-		effectivePool.set(i, p);
-		field.setValueAt(p, i);
 	}
 
 	private void makeSnakeSegment(Point p, Snake snake)
@@ -203,7 +206,8 @@ public class MasterMap
 	}
 
 	private boolean isOccupied(Point p) {
-		for(Snake s : snakes){
+		for(int i=0; i<snakes.size(); i++){
+			Snake s = snakes.get(i);
 			if(s.contains(p)){return true;}
 		}
 		return false;
@@ -277,7 +281,8 @@ public class MasterMap
 
 	private Snake getPlayerSnake(){
 		Snake ret = null;
-		for (Snake s : snakes){
+		for(int i=0; i<snakes.size(); i++){
+			Snake s = snakes.get(i);
 			if(s.getColor().equals(player.getColor())){
 				ret = s;
 			}
@@ -286,14 +291,14 @@ public class MasterMap
 
 	public void draw(Graphics g, int length)
 	{
-//		updateSnake(getPlayerSnake(), player);
+		//		updateSnake(getPlayerSnake(), player);
 		snakes.remove(getPlayerSnake());
 		snakes.add(player);
 		int scale = length / SIZE;
 		Color c;
 		Point m;
-		for (Snake s : snakes)
-		{
+		for(int i=0; i<snakes.size(); i++){
+			Snake s = snakes.get(i);
 			c = s.getColor();
 			m = munchieOwners.get(c);
 			g.setColor(c);
@@ -311,8 +316,8 @@ public class MasterMap
 		drawEdges(g, trueCenter, coor);
 		Color c;
 		Point m;
-		for (Snake s : snakes)
-		{
+		for(int i=0; i<snakes.size(); i++){
+			Snake s = snakes.get(i);
 			c = s.getColor();
 			m = munchieOwners.get(c);
 			m = translate(m, trueCenter, falseCenter, scale);
