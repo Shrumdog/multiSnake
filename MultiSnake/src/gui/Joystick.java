@@ -15,7 +15,6 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.swing.Timer;
 
-import multiSnake.Direction;
 import multiSnake.MasterMap;
 import multiSnake.Player;
 import multiSnake.Snake;
@@ -27,9 +26,9 @@ public class Joystick implements KeyListener, ActionListener{
 	private Player me;
 	private Snake snake;
 	private Timer timer;
-	private Direction direction;
+	private int direction;
 	private Connect c;
-	private ArrayList<String> playerAddresses;
+	private ArrayList<String> playerAddresses = new ArrayList<String>();
 
 	public Joystick(MasterMap mmap, VisualMap vmap, Player p, Snake s){
 		mastermap = mmap;
@@ -39,23 +38,14 @@ public class Joystick implements KeyListener, ActionListener{
 		mastermap.setPlayerSnake(snake);
 		timer = new Timer(40, this);
 		System.out.println("Joystick created");
-		playerAddresses = new ArrayList<String>();
 		//addAddress("209.65.57.21"); //<--------YOUR COMPUTER'S IP ADDRESS
 	}
 	
-//	public void addConnect(Connect c)
-//	{
-//		this.c = c;
-//	}
-	
-	public ArrayList<String> getPlayerAddresses() {
-		return playerAddresses;
+	public void addConnect(Connect c)
+	{
+		this.c = c;
 	}
 
-	public void updateAddresses(ArrayList<String> list){
-		playerAddresses = list;
-	}
-	
 	public void keyPressed(KeyEvent ke)
 	{
 		if (!(snake.isAlive))
@@ -67,15 +57,15 @@ public class Joystick implements KeyListener, ActionListener{
 				timer.start();
 			int kc = ke.getKeyCode();
 			if (kc == KeyEvent.VK_UP)
-				direction = mastermap.setDirection("n");
+				direction = mastermap.UP;
 			else if (kc == KeyEvent.VK_DOWN)
-				direction = mastermap.setDirection("s");
+				direction = mastermap.DOWN;
 			else if (kc == KeyEvent.VK_LEFT)
-				direction = mastermap.setDirection("w");
+				direction = mastermap.LEFT;
 			else if (kc == KeyEvent.VK_RIGHT)
-				direction = mastermap.setDirection("e");
+				direction = mastermap.RIGHT;
 
-			snake.isAlive = mastermap.move();
+			snake.isAlive = mastermap.move(direction);
 			visualmap.repaint();
 		}
 	}
@@ -105,7 +95,7 @@ public class Joystick implements KeyListener, ActionListener{
 		}
 		
 		if (ae.getSource() == timer){
-			snake.isAlive = mastermap.move();
+			snake.isAlive = mastermap.move(direction);
 			if (!snake.isAlive && timer.isRunning())
 				timer.stop();
 			visualmap.repaint();

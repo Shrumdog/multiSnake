@@ -2,7 +2,6 @@ package multiSnake;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
 
 public class Snake {
 	private SnakeSegment head, tail, iter;
@@ -42,15 +41,6 @@ public class Snake {
 			curSeg = nextElement();
 		}
 		return result;
-	}
-	
-	public ArrayList<Point> toArray(){
-		ArrayList<Point> ret = new ArrayList<Point>();
-		ret.add(this.start().getPoint());
-		while(this.moreElements()){
-			ret.add(nextElement().getPoint());
-		}
-		return ret;
 	}
 
 	public boolean empty() { 
