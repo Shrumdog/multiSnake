@@ -20,36 +20,36 @@ public class FirstResponder extends Thread{
 	private String update;
 	private String IPAddress;
 	private Socket socket;
-	
+
 	public FirstResponder(Socket s, String address){
 		IPAddress = address;
 		socket = s;
 	}
-	
+
 	public FirstResponder(String munchiePoint, String snake){
 		update = munchiePoint + snake;
 	}
-	
+
 	public void run(){
 		PrintWriter writer;
 		try {
 			writer = new PrintWriter (new OutputStreamWriter(socket.getOutputStream()));
 			StringBuilder infoToSend = new StringBuilder();
-			infoToSend.append(IPAddress);
+			// infoToSend.append(IPAddress);
 			writer.append(infoToSend);
 			writer.flush();
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
+
+
 	}
-	
+
 	public String getUpdate(){
 		return update;
 	}
-	
+
 	public String getStringUpdate(MasterMap map){
 		snakes = map.getSnakes();
 		//munchieOwners = map.getMunchieOwners();

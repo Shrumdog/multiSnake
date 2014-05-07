@@ -15,7 +15,7 @@ public class Buttons extends JPanel
 {
 	private Player me;
 	private SnakeOptions options;
-	private JButton spectate;
+	private ConnectButton connect;
 	private JButton play;
 	private Joystick jstick;
 
@@ -26,13 +26,13 @@ public class Buttons extends JPanel
 		options = o;
 		jstick = js;
 
-		spectate = new JButton("Spectate");
+		connect = new ConnectButton("Connect", player, js);
 		play = new JButton("Join Game");
 
-		spectate.addActionListener(new Spectate());
+		// connect.addActionListener(new Spectate());
 		play.addActionListener(new JoinGame());
 
-		add(spectate);
+		add(connect);
 		add(play);
 	}
 
@@ -54,12 +54,7 @@ public class Buttons extends JPanel
 			}
 			else
 			{
-				try {
-					Connect c = new Connect(me);
-					jstick.addConnect(c);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				connect.startConnection();
 				me.setName(options.getName());
 				me.startPlaying();
 				play.setText("Leave Game");

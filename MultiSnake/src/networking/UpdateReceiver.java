@@ -43,7 +43,7 @@ public class UpdateReceiver extends Thread{
 			else if(infoToParse.length() <= 15 && infoToParse != null){
 				//add the infoToParse strait into players that is located in connect
 				Joystick js = me.getVisualMap().getJoystick();
-				js.addAddress(infoToParse);
+				//js.addAddress(infoToParse);
 				System.out.println("Put the address: " + infoToParse + " into the playerAddresses data structure");
 			}
 		}

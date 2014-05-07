@@ -18,7 +18,8 @@ public class GUI extends JFrame
 	private Dimension screenSize;
 	private static Player me;
 	private MasterMap trueMap;
-	
+	private Joystick jstick;
+
 	public GUI(){
 		super("Multiplayer Snake");
 		screenSize = new Dimension(500, 500);
@@ -29,19 +30,20 @@ public class GUI extends JFrame
 		setSize(1350, 550);
 		setResizable(false);
 		setLayout(new FlowLayout());
-		
+
 		playScreen.setPreferredSize(screenSize);
-		Joystick jstick = me.connectListener();
+		jstick = me.connectListener();
 		playScreen.addKeyListener(jstick);
-		
+
 		add(playScreen);
 		add(new ControlPanel(me, trueMap, jstick));
-		
+
 	}
-	
+
 	public static void main(String[] args) throws IOException{
-		new GUI().setVisible(true);
-		SnakeServer snakeServer = new SnakeServer(me);
+		GUI gui = new GUI();
+		gui.setVisible(true);
+		SnakeServer snakeServer = new SnakeServer(me, gui.jstick);
 		snakeServer.start();
 
 	}
