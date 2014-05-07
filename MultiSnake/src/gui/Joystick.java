@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.swing.Timer;
 
+import multiSnake.Direction;
 import multiSnake.MasterMap;
 import multiSnake.Player;
 import multiSnake.Snake;
@@ -26,7 +27,7 @@ public class Joystick implements KeyListener, ActionListener{
 	private Player me;
 	private Snake snake;
 	private Timer timer;
-	private int direction;
+	private Direction direction;
 	private Connect c;
 	private ArrayList<String> playerAddresses = new ArrayList<String>();
 
@@ -57,15 +58,15 @@ public class Joystick implements KeyListener, ActionListener{
 				timer.start();
 			int kc = ke.getKeyCode();
 			if (kc == KeyEvent.VK_UP)
-				direction = mastermap.UP;
+				direction = mastermap.setDirection("n");
 			else if (kc == KeyEvent.VK_DOWN)
-				direction = mastermap.DOWN;
+				direction = mastermap.setDirection("s");
 			else if (kc == KeyEvent.VK_LEFT)
-				direction = mastermap.LEFT;
+				direction = mastermap.setDirection("w");
 			else if (kc == KeyEvent.VK_RIGHT)
-				direction = mastermap.RIGHT;
+				direction = mastermap.setDirection("e");
 
-			snake.isAlive = mastermap.move(direction);
+			snake.isAlive = mastermap.move();
 			visualmap.repaint();
 		}
 	}
@@ -95,7 +96,7 @@ public class Joystick implements KeyListener, ActionListener{
 		}
 		
 		if (ae.getSource() == timer){
-			snake.isAlive = mastermap.move(direction);
+			snake.isAlive = mastermap.move();
 			if (!snake.isAlive && timer.isRunning())
 				timer.stop();
 			visualmap.repaint();
