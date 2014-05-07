@@ -29,7 +29,7 @@ public class Joystick implements KeyListener, ActionListener{
 	private Timer timer;
 	private Direction direction;
 	private Connect c;
-	private ArrayList<String> playerAddresses = new ArrayList<String>();
+	private ArrayList<String> playerAddresses;
 
 	public Joystick(MasterMap mmap, VisualMap vmap, Player p, Snake s){
 		mastermap = mmap;
@@ -39,14 +39,19 @@ public class Joystick implements KeyListener, ActionListener{
 		mastermap.setPlayerSnake(snake);
 		timer = new Timer(40, this);
 		System.out.println("Joystick created");
+		playerAddresses = new ArrayList<String>();
 		//addAddress("209.65.57.21"); //<--------YOUR COMPUTER'S IP ADDRESS
 	}
 	
-	public void addConnect(Connect c)
-	{
-		this.c = c;
-	}
+//	public void addConnect(Connect c)
+//	{
+//		this.c = c;
+//	}
 
+	public void updateAddresses(ArrayList<String> list){
+		playerAddresses = list;
+	}
+	
 	public void keyPressed(KeyEvent ke)
 	{
 		if (!(snake.isAlive))

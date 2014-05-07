@@ -23,15 +23,17 @@ public class ConnectButton extends JButton
 {
 	private Dimension textFieldSize = new Dimension(150, 20);
 	private JPanel infoNeeded;
+	private Joystick joy;
 	private ArrayList<JTextField> IPFields;
 	private ArrayList<String> IPAddresses;
 	private Player player;
 
-	public ConnectButton(String label, Player me)
+	public ConnectButton(String label, Player me, Joystick happiness)
 	{
 		super(label);
 		// System.out.println("Set " + who + " to " + me);
 		player = me;
+		this.joy = happiness;
 		System.out.println(player + " is " + me);
 		infoNeeded = new JPanel();
 		infoNeeded.setLayout(new GridLayout(10, 0));
@@ -95,6 +97,7 @@ public class ConnectButton extends JButton
 	
 	private void displayPrompt()
 	{
+		infoNeeded.add(new JLabel("Please enter your IP Address first followed by the IP Addresses of all other players"));
 		infoNeeded.add(new JLabel("IP Address: "));
 		for(String ip: IPAddresses)
 		{
@@ -126,6 +129,7 @@ public class ConnectButton extends JButton
 		public void actionPerformed(ActionEvent arg0)
 		{
 			displayPrompt();
+			joy.updateAddresses(IPAddresses);
 		}
 	}
 }

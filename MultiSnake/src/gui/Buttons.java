@@ -26,7 +26,7 @@ public class Buttons extends JPanel
 		options = o;
 		jstick = js;
 
-		connect = new ConnectButton("Connect", player);
+		connect = new ConnectButton("Connect", player, js);
 		play = new JButton("Join Game");
 
 //		connect.addActionListener(new Spectate());
