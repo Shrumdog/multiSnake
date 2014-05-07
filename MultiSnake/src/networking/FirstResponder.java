@@ -35,7 +35,7 @@ public class FirstResponder extends Thread{
 		try {
 			writer = new PrintWriter (new OutputStreamWriter(socket.getOutputStream()));
 			StringBuilder infoToSend = new StringBuilder();
-			infoToSend.append(IPAddress);
+//			infoToSend.append(IPAddress);
 			writer.append(infoToSend);
 			writer.flush();
 			socket.close();

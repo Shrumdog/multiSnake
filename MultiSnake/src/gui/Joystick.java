@@ -47,6 +47,10 @@ public class Joystick implements KeyListener, ActionListener{
 //	{
 //		this.c = c;
 //	}
+	
+	public ArrayList<String> getPlayerAddresses() {
+		return playerAddresses;
+	}
 
 	public void updateAddresses(ArrayList<String> list){
 		playerAddresses = list;

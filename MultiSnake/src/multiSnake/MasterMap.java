@@ -76,17 +76,20 @@ public class MasterMap
 			}
 		}
 	}
+
 	private void updateSnake(Snake old, Snake nu){
-		ArrayList<Point> oldArray = old.toArray();
-		ArrayList<Point> nuArray = nu.toArray();
-		for(Point p: oldArray){
-			if(nuArray.contains(p))
-				nuArray.remove(p);
-			else
-				freeUp(p);
-		}
-		for(Point p: nuArray){
-			occupy(p);
+		if(old != null && nu != null){
+			ArrayList<Point> oldArray = old.toArray();
+			ArrayList<Point> nuArray = nu.toArray();
+			for(Point p: oldArray){
+				if(nuArray.contains(p))
+					nuArray.remove(p);
+				else
+					freeUp(p);
+			}
+			for(Point p: nuArray){
+				occupy(p);
+			}
 		}
 	}
 
@@ -208,13 +211,13 @@ public class MasterMap
 	}
 
 	public boolean move() { // did the worm survive the move?
-			if(player.isAlive)
-			{
-				SnakeSegment head = player.getHead();
-				Point go = dir.move(head.getPoint());
-				return finalizeMove(go);
-			}
-	return false;
+		if(player.isAlive)
+		{
+			SnakeSegment head = player.getHead();
+			Point go = dir.move(head.getPoint());
+			return finalizeMove(go);
+		}
+		return false;
 	}
 
 	public boolean finalizeMove(Point p)
@@ -300,11 +303,21 @@ public class MasterMap
 
 	public int getAnIdxValue(int max)
 	{ // return a value in 0..(max-1)
-			return Math.abs(rand.nextInt(max - 1));
+		return Math.abs(rand.nextInt(max - 1));
+	}
+	
+	private Snake getPlayerSnake(){
+		Snake ret = null;
+		for (Snake s : snakes){
+			if(s.getColor().equals(player.getColor())){
+				ret = s;
+			}
+		} return ret;
 	}
 
 	public void draw(Graphics g, int length)
 	{
+		updateSnake(getPlayerSnake(), player);
 		int scale = length / SIZE;
 		Color c;
 		Point m;
@@ -329,6 +342,7 @@ public class MasterMap
 		Point m;
 		for (Snake s : snakes)
 		{
+			System.out.println(s);
 			c = s.getColor();
 			m = munchieOwners.get(c);
 			m = translate(m, trueCenter, falseCenter, scale);
