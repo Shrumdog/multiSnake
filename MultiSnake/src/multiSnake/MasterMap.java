@@ -1,4 +1,3 @@
-
 package multiSnake;
 
 import java.awt.Color;
@@ -146,8 +145,10 @@ public class MasterMap
 
 	private void swapFree(Point p, int i)
 	{
-		freePool.set(i, p);
-		field.setValueAt(p, i);
+		if (i >= 0){
+			freePool.set(i, p);
+			field.setValueAt(p, i);
+		}
 	}
 
 	private void swapEffect(Point p, int i)
@@ -278,9 +279,8 @@ public class MasterMap
 		} return ret;
 	}
 
-	public void draw(Graphics g, int length)
+	public void drawMiniMap(Graphics g, int length)
 	{
-		//		updateSnake(getPlayerSnake(), player);
 		snakes.remove(getPlayerSnake());
 		snakes.add(player);
 		int scale = length / SIZE;
@@ -296,7 +296,7 @@ public class MasterMap
 		}
 	}
 
-	public void draw(Graphics g, int coor, Snake focusSnake)
+	public void drawVisualMap(Graphics g, int coor, Snake focusSnake)
 	{
 		int scale = 10;
 		Point falseCenter = new Point(coor, coor);
@@ -312,7 +312,7 @@ public class MasterMap
 			m = translate(m, trueCenter, falseCenter, scale);
 			g.setColor(c);
 			g.fillRect(m.getCol(), m.getRow(), scale, scale);
-			s.draw(g, scale, trueCenter, falseCenter);
+			s.drawSnake(g, scale, trueCenter, falseCenter);
 			snakeMade = true;
 		}
 	}

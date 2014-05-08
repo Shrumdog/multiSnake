@@ -2,7 +2,7 @@ package multiSnake;
 
 import static org.junit.Assert.*;
 import gui.GUI;
-import gui.Screen;
+import gui.VisualMap;
 
 import java.awt.Color;
 
@@ -12,7 +12,7 @@ import org.junit.Test;
 public class Tests
 {
 	private MasterMap map;
-	private Screen screen;
+	private VisualMap screen;
 	private Player player;
 	private Snake snake;
 	
@@ -20,7 +20,7 @@ public class Tests
 	public void setup()
 	{
 		map = new MasterMap();
-		screen = new Screen(map);
+		screen = new VisualMap(map);
 		player = new Player(screen);
 		
 //		forTheSakeOfCoverage();
@@ -95,7 +95,7 @@ public class Tests
 		System.out.println("Player Test");
 		
 		assertEquals(player.getTrueMap(), map);
-		assertEquals(player.getScreen(), screen);
+		assertEquals(player.getVisualMap(), screen);
 		
 		Color c = Color.YELLOW;
 		player.setColor(c);

@@ -15,10 +15,9 @@ public class UpdateReceiver extends Thread{
 	private Socket socket;
 	private Player me;
 	private int indexForColors = 0;
-
+	private Point p = new Point(0,0);
+	//private Snake s = new Snake();
 	
-	
-	//if the snake is the color of a snake that is already drawn
 	public UpdateReceiver(Socket s, Player who){
 		socket = s;
 		me = who;
@@ -30,21 +29,14 @@ public class UpdateReceiver extends Thread{
 			String infoToParse = "";
 			infoToParse += input.readLine();
 			if(infoToParse == null){}
-			else if(infoToParse.length() >= 15){
+			else {
 				Point munchiePoint = parseInputForMunchie(infoToParse);
 				Snake snake = parseInputForSnake(infoToParse);
 				Color snakeColor = parseInputforColor(infoToParse);
 				MasterMap map = me.getTrueMap();
-				//only allow 1 snake per player when we add snake so that it doesn't create 1000000000 snakes.
 				snake.color = snakeColor;
 				map.addSnake(snake);
 				map.swapMunchie(snake, munchiePoint);
-			}
-			else if(infoToParse.length() <= 15 && infoToParse != null){
-				//add the infoToParse strait into players that is located in connect
-				Joystick js = me.getScreen().getJoystick();
-				//js.addAddress(infoToParse);
-				System.out.println("Put the address: " + infoToParse + " into the playerAddresses data structure");
 			}
 		}
 		catch (IOException e) {
@@ -66,12 +58,12 @@ public class UpdateReceiver extends Thread{
 		return new Color(color1, color2, color3);
 	}
 
+	@SuppressWarnings("static-access")
 	public Point parseInputForMunchie(String input){
 		String[] inputs = input.split(" ");
 		String stringMunchiePoint = inputs[0];
-		Point munchiePoint = toPoint(stringMunchiePoint);
+		Point munchiePoint = p.toPoint(stringMunchiePoint);
 		return munchiePoint;
-		
 	}
 	
 	public Snake parseInputForSnake(String input){
@@ -86,30 +78,19 @@ public class UpdateReceiver extends Thread{
 				indexForColors = k;
 			}
 		}
-		
 		Snake inputSnake = toSnake(stringSnake);
 		return inputSnake;
 	}
 	
+	@SuppressWarnings("static-access")
 	public Snake toSnake(String snake){
-		System.out.println("Snake: " + snake);
+		//System.out.println("Snake: " + snake);
 		String[] inputs = snake.split(" ");
 		Snake snakeToReturn = new Snake();
 		for(String s : inputs){
-			Point snakePoint = toPoint(s);
+			Point snakePoint = p.toPoint(s);
 			snakeToReturn.addToHead(new SnakeSegment(snakePoint));
 		}
 		return snakeToReturn;
-	}
-
-	public Point toPoint(String point){
-		point = point.trim();
-		String[] pointInfo = point.split(",");
-		String temp = pointInfo[0].replace("(", "");
-		int row = Integer.parseInt(temp);
-		temp = pointInfo[1];
-		temp = (String) temp.subSequence(0, 2);
-		int col = Integer.parseInt(temp);
-		return new Point(row, col);
 	}
 }

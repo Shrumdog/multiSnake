@@ -27,18 +27,18 @@ public class SnakeServer extends Thread {
 		for(;;){
 			//System.out.println("Server listening....");
 			Socket s;
-//			if(js.getPlayerAddresses().size() > 1){
-				try {
-					s = server.accept();
-					System.out.println("I have accepted a request");
-					System.out.println("Processing...");
-					UpdateReceiver update = new UpdateReceiver(s, me);
-					update.start();
-				} catch (IOException e) {
-					e.printStackTrace();
-					System.out.println("Well, whatever...");
-				}
-//			}
+			// if(js.getPlayerAddresses().size() > 1){
+			try {
+				s = server.accept();
+				System.out.println("I have accepted a request");
+				System.out.println("Processing...");
+				UpdateReceiver update = new UpdateReceiver(s, me);
+				update.start();
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Well, whatever...");
+			}
+			// }
 		}
 	}
 

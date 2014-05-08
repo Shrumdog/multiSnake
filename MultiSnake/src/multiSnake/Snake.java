@@ -8,6 +8,7 @@ public class Snake {
 	private SnakeSegment head, tail;
 	public Color color;
 	public boolean isAlive;
+	//private Point p = new Point(0,0);
 
 	public Snake() {
 		head = tail = null;
@@ -45,14 +46,14 @@ public class Snake {
 		return result;
 	}
 
-//	public ArrayList<Point> toArray(){
-//		ArrayList<Point> ret = new ArrayList<Point>();
-//		ret.add(this.start().getPoint());
-//		while(this.moreElements()){
-//			ret.add(nextElement().getPoint());
-//		}
-//		return ret;
-//	}
+	//	public ArrayList<Point> toArray(){
+	//		ArrayList<Point> ret = new ArrayList<Point>();
+	//		ret.add(this.start().getPoint());
+	//		while(this.moreElements()){
+	//			ret.add(nextElement().getPoint());
+	//		}
+	//		return ret;
+	//	}
 
 	public boolean empty() {
 		return (head != null);
@@ -66,9 +67,7 @@ public class Snake {
 	}
 
 	public SnakeSegment nextElement(SnakeSegment seg) {
-//		SnakeSegment ws = seg;
 		seg = seg.getNext();
-		//System.out.println("what is being returned: " + ws.toString() + "what the next element is: " + seg.toString());
 		return seg;
 	}
 
@@ -88,31 +87,30 @@ public class Snake {
 		}
 	}
 
-	public void draw(Graphics g, int scale, Point trueCenter, Point falseCenter)
+	public void drawSnake(Graphics g, int scale, Point trueCenter, Point falseCenter)
 	{
 		if(isAlive){
-			SnakeSegment seg = new SnakeSegment(head.getPoint());
-			int count = 0;
-			g.setColor(color.darker().darker());
-			Point segLoc = translate(seg.getPoint(), trueCenter, falseCenter, scale);
-			g.fillOval(segLoc.getCol(), segLoc.getRow(), scale, scale);
-			seg = start(seg);
-//			if(moreElements(seg)){
-//				seg = nextElement(seg);
-//			}
-			g.setColor(color);
-			
-			while(moreElements(seg))
-			{
-				System.out.println(seg.toString());
-				count++;
-				segLoc = translate(seg.getPoint(), trueCenter, falseCenter, scale);
-				g.fillOval(segLoc.getCol(), segLoc.getRow(), scale, scale);
-				seg = nextElement(seg);
-			}
-			g.setColor(Color.black);
-			g.drawString("Snake length: "+count, 8, 12);
+			drawSegments(g, scale, trueCenter, falseCenter);
 		}
+	}
+	
+	public void drawSegments(Graphics g, int scale, Point trueCenter, Point falseCenter){
+		SnakeSegment seg = new SnakeSegment(head.getPoint());
+		int count = 0;
+		g.setColor(color.darker().darker());
+		Point segLoc = translate(seg.getPoint(), trueCenter, falseCenter, scale);
+		g.fillOval(segLoc.getCol(), segLoc.getRow(), scale, scale);
+		seg = start(seg);
+		g.setColor(color);
+
+		while(moreElements(seg)){
+			count++;
+			segLoc = translate(seg.getPoint(), trueCenter, falseCenter, scale);
+			g.fillOval(segLoc.getCol(), segLoc.getRow(), scale, scale);
+			seg = nextElement(seg);
+		}
+		g.setColor(Color.black);
+		g.drawString("Snake length: "+count, 8, 12);
 	}
 
 	private Point translate(Point segLoc, Point trueCenter, Point falseCenter, int scale)
@@ -131,4 +129,6 @@ public class Snake {
 		}
 		return false;
 	}
+	
+	
 }

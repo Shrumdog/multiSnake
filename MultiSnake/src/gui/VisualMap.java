@@ -13,13 +13,13 @@ import multiSnake.Snake;
 
 
 @SuppressWarnings("serial")
-public class Screen extends JPanel
+public class VisualMap extends JPanel
 {
 	private MasterMap trueMap;
 	private Snake focusSnake;
 	private Joystick jStick;
 
-	public Screen(MasterMap map)
+	public VisualMap(MasterMap map)
 	{
 		super();
 		setLayout(new BorderLayout());
@@ -33,7 +33,7 @@ public class Screen extends JPanel
 	{
 		super.paintComponent(g);
 		int coor = (int) getSize().getHeight()/2;
-		if(focusSnake.getHead() != null) trueMap.draw(g, coor, focusSnake);
+		if(focusSnake.getHead() != null) trueMap.drawVisualMap(g, coor, focusSnake);
 		requestFocusInWindow();
 	}
 
@@ -43,19 +43,16 @@ public class Screen extends JPanel
 		repaint();
 	}
 
-	public void removeSnake(Snake s)
-	{
+	public void removeSnake(Snake s){
 		trueMap.removeSnake(s);
 		repaint();
 	}
 
-	public MasterMap getTrueMap()
-	{
+	public MasterMap getTrueMap(){
 		return trueMap;
 	}
 
-	public Joystick connectListener(Player me, Snake s)
-	{
+	public Joystick connectListener(Player me, Snake s){
 		focusSnake = s;
 		jStick = new Joystick(trueMap, this, me, s);
 		return jStick;

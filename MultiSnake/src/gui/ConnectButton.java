@@ -24,8 +24,8 @@ public class ConnectButton extends JButton
 	private Dimension textFieldSize = new Dimension(150, 20);
 	private JPanel infoNeeded;
 	private Joystick joy;
+	private ArrayList<JTextField> IPFields;
 	private ArrayList<String> IPAddresses;
-	private JTextField IPField;
 	private Player player;
 
 	public ConnectButton(String label, Player me, Joystick happiness)
@@ -33,12 +33,12 @@ public class ConnectButton extends JButton
 		super(label);
 		// System.out.println("Set " + who + " to " + me);
 		player = me;
-		joy = happiness;
-		System.out.println(player + " is " + me);
+		this.joy = happiness;
+		//System.out.println(player + " is " + me);
 		infoNeeded = new JPanel();
 		infoNeeded.setLayout(new GridLayout(10, 0));
 		IPAddresses = happiness.getPlayerAddresses();
-		IPField = newIPField();
+		initializeIPFields();
 		addActionListener(new Display());
 	}
 
@@ -66,6 +66,14 @@ public class ConnectButton extends JButton
 		return player;
 	}
 
+	private void initializeIPFields()
+	{
+		JTextField textField = newIPField();
+		IPFields = new ArrayList<JTextField>();
+		IPFields.add(textField);
+		addTextListener(textField);
+	}
+
 	private JTextField newIPField()
 	{
 		JTextField textField = new JTextField("");
@@ -73,34 +81,42 @@ public class ConnectButton extends JButton
 		return textField;
 	}
 
+	private void addTextListener(JTextField field)
+	{
+		Document doc = field.getDocument();
+		doc.addDocumentListener(new DocListener(IPFields, infoNeeded));
+	}
+
 	private void createFirstResponse(String IPAddress) throws IOException
 	{
 		Socket socket = new Socket("209.65.57.21", 8888);
 		FirstResponder first = new FirstResponder(socket, IPAddress);
-		System.out.println("sent a firstresponder thread to the server");
+		//System.out.println("sent a firstresponder thread to the server");
 		first.start();
 	}
 
-	private void displayPrompt()
-	{
-		infoNeeded.add(new JLabel("Please enter your IP Address first followed by the IP Addresses of all other players"));
+	private void displayPrompt(){
 		infoNeeded.add(new JLabel("IP Address: "));
 		for(String ip: IPAddresses)
 		{
 			JLabel IPLabel = new JLabel(ip);
 			infoNeeded.add(IPLabel);
 		}
-		infoNeeded.add(IPField);
+		for(JTextField tf: IPFields)
+		{
+			infoNeeded.add(tf);
+		}
 
 		JOptionPane.showMessageDialog(null, infoNeeded, "Connection Information", JOptionPane.QUESTION_MESSAGE);
-//		IPAddresses = new ArrayList<String>();
-		
-		String str = IPField.getText();
-		System.out.println(str);
-		if(!str.equals(""))
+		IPAddresses = new ArrayList<String>();
+		for(JTextField tf: IPFields)
 		{
-			IPAddresses.add(str);
-			IPField.setText("");
+			String str = tf.getText();
+			System.out.println(str);
+			if(!str.equals(""))
+			{
+				IPAddresses.add(str);
+			}
 		}
 
 		infoNeeded.removeAll();

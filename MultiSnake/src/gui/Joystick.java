@@ -23,16 +23,16 @@ import networking.UpdateSender;
 
 public class Joystick implements KeyListener, ActionListener{
 	private MasterMap mastermap;
-	private Screen screen;
+	private VisualMap visualmap;
 	private Player me;
 	private Snake snake;
 	private Timer timer;
 	private Direction direction;
 	private ArrayList<String> playerAddresses;
 
-	public Joystick(MasterMap mmap, Screen vmap, Player p, Snake s){
+	public Joystick(MasterMap mmap, VisualMap vmap, Player p, Snake s){
 		mastermap = mmap;
-		screen = vmap;
+		visualmap = vmap;
 		me = p;
 		snake = s;
 		mastermap.setPlayerSnake(snake);
@@ -53,7 +53,6 @@ public class Joystick implements KeyListener, ActionListener{
 
 	public void updateAddresses(ArrayList<String> list){
 		playerAddresses = list;
-		System.out.println("player addresses size: " + playerAddresses.size());
 	}
 
 	public void keyPressed(KeyEvent ke)
@@ -76,7 +75,7 @@ public class Joystick implements KeyListener, ActionListener{
 				direction = mastermap.setDirection("e");
 
 			snake.isAlive = mastermap.move();
-			screen.repaint();
+			visualmap.repaint();
 		}
 	}
 
@@ -86,29 +85,28 @@ public class Joystick implements KeyListener, ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent ae){
-		System.out.println("player set size: " + playerAddresses.size());
 		for(int i= 0; i<playerAddresses.size(); i++){
-//			if(playerAddresses.size()>1){
-				Socket socket;
-				try {
-					//send in the IP address of the game that is already running
-					System.out.println("creating socket to address: " + playerAddresses.get(i));
-					socket = new Socket(playerAddresses.get(i), 8888);
-					UpdateSender sender = new UpdateSender(socket, me);
-					sender.start();
-				} catch (UnknownHostException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			//			if(playerAddresses.size()>1){
+			Socket socket;
+			try {
+				//send in the IP address of the game that is already running
+				System.out.println("creating socket to address: " + playerAddresses.get(i));
+				socket = new Socket(playerAddresses.get(i), 8888);
+				UpdateSender sender = new UpdateSender(socket, me);
+				sender.start();
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-//		}
+		}
+		//		}
 
 		if (ae.getSource() == timer){
 			snake.isAlive = mastermap.move();
 			if (!snake.isAlive && timer.isRunning())
 				timer.stop();
-			screen.repaint();
+			visualmap.repaint();
 		}
 	}
 

@@ -37,7 +37,7 @@ public class MiniMap extends JPanel implements ActionListener
 	{
 		super.paintComponent(g);
 		int length = (int) getSize().getHeight();
-		trueMap.draw(g, length);
+		trueMap.drawMiniMap(g, length);
 	}
 
 	@Override
