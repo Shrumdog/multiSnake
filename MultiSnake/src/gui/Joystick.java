@@ -23,16 +23,16 @@ import networking.UpdateSender;
 
 public class Joystick implements KeyListener, ActionListener{
 	private MasterMap mastermap;
-	private VisualMap visualmap;
+	private Screen screen;
 	private Player me;
 	private Snake snake;
 	private Timer timer;
 	private Direction direction;
 	private ArrayList<String> playerAddresses;
 
-	public Joystick(MasterMap mmap, VisualMap vmap, Player p, Snake s){
+	public Joystick(MasterMap mmap, Screen vmap, Player p, Snake s){
 		mastermap = mmap;
-		visualmap = vmap;
+		screen = vmap;
 		me = p;
 		snake = s;
 		mastermap.setPlayerSnake(snake);
@@ -76,7 +76,7 @@ public class Joystick implements KeyListener, ActionListener{
 				direction = mastermap.setDirection("e");
 
 			snake.isAlive = mastermap.move();
-			visualmap.repaint();
+			screen.repaint();
 		}
 	}
 
@@ -108,7 +108,7 @@ public class Joystick implements KeyListener, ActionListener{
 			snake.isAlive = mastermap.move();
 			if (!snake.isAlive && timer.isRunning())
 				timer.stop();
-			visualmap.repaint();
+			screen.repaint();
 		}
 	}
 

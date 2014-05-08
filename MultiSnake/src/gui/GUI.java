@@ -14,7 +14,7 @@ import networking.SnakeServer;
 @SuppressWarnings("serial")
 public class GUI extends JFrame
 {
-	private VisualMap playScreen;
+	private Screen playScreen;
 	private Dimension screenSize;
 	private static Player me;
 	private MasterMap trueMap;
@@ -24,7 +24,7 @@ public class GUI extends JFrame
 		super("Multiplayer Snake");
 		screenSize = new Dimension(500, 500);
 		trueMap = new MasterMap();
-		playScreen = new VisualMap(trueMap);
+		playScreen = new Screen(trueMap);
 		me = new Player(playScreen);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1350, 550);

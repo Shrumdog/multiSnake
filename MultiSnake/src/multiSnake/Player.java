@@ -1,7 +1,7 @@
 package multiSnake;
 
 import gui.Joystick;
-import gui.VisualMap;
+import gui.Screen;
 
 import java.awt.Color;
 import java.awt.event.KeyListener;
@@ -10,9 +10,9 @@ public class Player
 {
 	private String name;
 	private Snake mySnake;
-	private VisualMap fakeMap;
+	private Screen fakeMap;
 
-	public Player(VisualMap map)
+	public Player(Screen map)
 	{
 		fakeMap = map;
 		mySnake = new Snake();
@@ -51,7 +51,7 @@ public class Player
 		return fakeMap.getTrueMap();
 	}
 	
-	public VisualMap getVisualMap(){
+	public Screen getScreen(){
 		return fakeMap;
 	}
 
