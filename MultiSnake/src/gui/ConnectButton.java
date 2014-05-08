@@ -34,7 +34,11 @@ public class ConnectButton extends JButton
 		// System.out.println("Set " + who + " to " + me);
 		player = me;
 		this.joy = happiness;
+<<<<<<< HEAD
 		//System.out.println(player + " is " + me);
+=======
+		System.out.println(player + " is " + me);
+>>>>>>> parent of c3a1f39... ConnectButton fixed?
 		infoNeeded = new JPanel();
 		infoNeeded.setLayout(new GridLayout(10, 0));
 		IPAddresses = happiness.getPlayerAddresses();
