@@ -189,9 +189,7 @@ public class MasterMap
 	{
 		Point munchieLocation = munchieOwners.get(player.getColor());
 		if (isOccupied(p)){return false;}
-		else if (contains(p)){
-			handleMunchie(p, munchieLocation);
-		}
+		handleMunchie(p, munchieLocation);
 
 		if (growthVal > 0){
 			grow(p, player);
@@ -217,9 +215,6 @@ public class MasterMap
 		if (p.equals(munch)){
 			score += munchieVal;
 			growthVal += munchieVal;
-		} else {
-			score -= munchieVal;
-			growthVal -= munchieVal;
 		}
 		newMunchieLocation(p, player);
 	}
@@ -265,13 +260,6 @@ public class MasterMap
 		} else {
 			swapFree(temp, field.valueAt(p));
 		}
-	}
-
-	private boolean contains(Point p) {
-		for(Color c: munchieOwners.keySet()){
-			if(munchieOwners.get(c).equals(p)){return true;}
-		}
-		return false;
 	}
 
 	public int getAnIdxValue(int max)

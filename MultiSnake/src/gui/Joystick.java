@@ -87,8 +87,8 @@ public class Joystick implements KeyListener, ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae){
 		System.out.println("player set size: " + playerAddresses.size());
-		for(int i= 1; i<playerAddresses.size(); i++){
-			if(playerAddresses.size()>1){
+		for(int i= 0; i<playerAddresses.size(); i++){
+//			if(playerAddresses.size()>1){
 				Socket socket;
 				try {
 					//send in the IP address of the game that is already running
@@ -102,7 +102,7 @@ public class Joystick implements KeyListener, ActionListener{
 					e.printStackTrace();
 				}
 			}
-		}
+//		}
 
 		if (ae.getSource() == timer){
 			snake.isAlive = mastermap.move();
