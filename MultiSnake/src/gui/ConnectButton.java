@@ -24,7 +24,7 @@ public class ConnectButton extends JButton
 	private Dimension textFieldSize = new Dimension(150, 20);
 	private JPanel infoNeeded;
 	private Joystick joy;
-	private ArrayList<JTextField> IPFields;
+	private JTextField IPField;
 	private ArrayList<String> IPAddresses;
 	private Player player;
 
@@ -33,16 +33,12 @@ public class ConnectButton extends JButton
 		super(label);
 		// System.out.println("Set " + who + " to " + me);
 		player = me;
-		this.joy = happiness;
-<<<<<<< HEAD
+		joy = happiness;
 		//System.out.println(player + " is " + me);
-=======
-		System.out.println(player + " is " + me);
->>>>>>> parent of c3a1f39... ConnectButton fixed?
 		infoNeeded = new JPanel();
 		infoNeeded.setLayout(new GridLayout(10, 0));
 		IPAddresses = happiness.getPlayerAddresses();
-		initializeIPFields();
+		IPField = newIPField();
 		addActionListener(new Display());
 	}
 
@@ -70,25 +66,11 @@ public class ConnectButton extends JButton
 		return player;
 	}
 
-	private void initializeIPFields()
-	{
-		JTextField textField = newIPField();
-		IPFields = new ArrayList<JTextField>();
-		IPFields.add(textField);
-		addTextListener(textField);
-	}
-
 	private JTextField newIPField()
 	{
 		JTextField textField = new JTextField("");
 		textField.setPreferredSize(textFieldSize);
 		return textField;
-	}
-
-	private void addTextListener(JTextField field)
-	{
-		Document doc = field.getDocument();
-		doc.addDocumentListener(new DocListener(IPFields, infoNeeded));
 	}
 
 	private void createFirstResponse(String IPAddress) throws IOException
@@ -106,21 +88,16 @@ public class ConnectButton extends JButton
 			JLabel IPLabel = new JLabel(ip);
 			infoNeeded.add(IPLabel);
 		}
-		for(JTextField tf: IPFields)
-		{
-			infoNeeded.add(tf);
-		}
+		infoNeeded.add(IPField);
 
 		JOptionPane.showMessageDialog(null, infoNeeded, "Connection Information", JOptionPane.QUESTION_MESSAGE);
 		IPAddresses = new ArrayList<String>();
-		for(JTextField tf: IPFields)
+		String str = IPField.getText();
+		System.out.println(str);
+		if(!str.equals(""))
 		{
-			String str = tf.getText();
-			System.out.println(str);
-			if(!str.equals(""))
-			{
-				IPAddresses.add(str);
-			}
+			IPAddresses.add(str);
+			IPField.setText("");
 		}
 
 		infoNeeded.removeAll();

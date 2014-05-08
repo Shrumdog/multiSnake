@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import multiSnake.Player;
@@ -54,10 +55,15 @@ public class Buttons extends JPanel
 			}
 			else
 			{
-				connect.startConnection();
-				me.setName(options.getName());
-				me.startPlaying();
-				play.setText("Leave Game");
+				if(me.readyToJoin()){
+					connect.startConnection();
+					me.setName(options.getName());
+					me.startPlaying();
+					play.setText("Leave Game");
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Please select a color for your snake.");
+				}
 			}
 		}
 	}

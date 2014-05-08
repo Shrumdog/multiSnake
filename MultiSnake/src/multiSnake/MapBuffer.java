@@ -39,7 +39,9 @@ public class MapBuffer {
 	}
 
 	public int valueAt( Point p ) {
-		return screen[p.getRow()][p.getCol()];
+		if(p.getCol() >= 0 && p.getRow() >= 0){
+			return screen[p.getRow()][p.getCol()];
+		} return -1;
 	}
 	
 	public void setValueAt( Point p, int n ) {

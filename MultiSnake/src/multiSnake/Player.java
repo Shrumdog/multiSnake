@@ -6,16 +6,20 @@ import gui.VisualMap;
 import java.awt.Color;
 import java.awt.event.KeyListener;
 
+import javax.swing.JOptionPane;
+
 public class Player
 {
 	private String name;
 	private Snake mySnake;
 	private VisualMap fakeMap;
+	private boolean firstAdd = true;
 
 	public Player(VisualMap map)
 	{
 		fakeMap = map;
 		mySnake = new Snake();
+		mySnake.isAlive = false;
 		name = new String("unnamed");
 	}
 
@@ -26,13 +30,20 @@ public class Player
 
 	public void setColor(Color c)
 	{
-		mySnake.color = c;
+		if(firstAdd){
+			mySnake.color = c;
+		}
+		firstAdd = false;
 	}
 
 	public void startPlaying()
 	{
 		mySnake.isAlive = true;
 		fakeMap.addSnake(mySnake);
+	}
+	
+	public boolean readyToJoin(){
+		return !mySnake.getColor().equals(Color.gray);
 	}
 
 	public void stopPlaying()

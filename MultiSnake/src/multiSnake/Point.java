@@ -35,15 +35,4 @@ public class Point {
 	  {
 		  return "("+row+","+col+") ";
 	  }
-	  
-	  public static Point toPoint(String point){
-			point = point.trim();
-			String[] pointInfo = point.split(",");
-			String temp = pointInfo[0].replace("(", "");
-			int row = Integer.parseInt(temp);
-			temp = pointInfo[1];
-			temp = (String) temp.subSequence(0, 2);
-			int col = Integer.parseInt(temp);
-			return new Point(row, col);
-		}
 }

@@ -15,8 +15,6 @@ public class UpdateReceiver extends Thread{
 	private Socket socket;
 	private Player me;
 	private int indexForColors = 0;
-	private Point p = new Point(0,0);
-	//private Snake s = new Snake();
 	
 	public UpdateReceiver(Socket s, Player who){
 		socket = s;
@@ -62,7 +60,7 @@ public class UpdateReceiver extends Thread{
 	public Point parseInputForMunchie(String input){
 		String[] inputs = input.split(" ");
 		String stringMunchiePoint = inputs[0];
-		Point munchiePoint = p.toPoint(stringMunchiePoint);
+		Point munchiePoint = toPoint(stringMunchiePoint);
 		return munchiePoint;
 	}
 	
@@ -88,9 +86,20 @@ public class UpdateReceiver extends Thread{
 		String[] inputs = snake.split(" ");
 		Snake snakeToReturn = new Snake();
 		for(String s : inputs){
-			Point snakePoint = p.toPoint(s);
+			Point snakePoint = toPoint(s);
 			snakeToReturn.addToHead(new SnakeSegment(snakePoint));
 		}
 		return snakeToReturn;
+	}
+	
+	public static Point toPoint(String point){
+		point = point.trim();
+		String[] pointInfo = point.split(",");
+		String temp = pointInfo[0].replace("(", "");
+		int row = Integer.parseInt(temp);
+		temp = pointInfo[1];
+		temp = (String) temp.subSequence(0, 2);
+		int col = Integer.parseInt(temp);
+		return new Point(row, col);
 	}
 }

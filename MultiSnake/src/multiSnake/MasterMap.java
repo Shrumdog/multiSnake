@@ -78,52 +78,48 @@ public class MasterMap
 	private void makeEffect()
 	{
 		effectivePool.clear();
-		for (int x = (SIZE - effectiveSize) / 2; x <= ((SIZE - effectiveSize) / 2)
-				+ effectiveSize; x++)
-		{
-			for (int y = (SIZE - effectiveSize) / 2; y <= ((SIZE - effectiveSize) / 2)
-					+ effectiveSize; y++)
-			{
+		int gameSize = SIZE-effectiveSize;
+		for (int x = gameSize/ 2; x <= (gameSize / 2) + effectiveSize; x++){
+			for (int y = gameSize / 2; y <= (gameSize / 2) + effectiveSize; y++){
 				effect(new Point(x, y));
 			}
 		}
 	}
 
-	public void removeSnake(Snake snake)
-	{
+	public void removeSnake(Snake snake){
 		Point m = munchieOwners.remove(snake.getColor());;
 		snakes.remove(snake);
 	}
 
-	private void spawnSnake(Snake snake)
-	{
+	private void spawnSnake(Snake snake){
 		Point p = generateLoc();
-		while (!effectivePool.contains(p))
-		{
+		while (!effectivePool.contains(p)){
 			p = generateLoc();
 		}
 		int direction = rand.nextInt(2);
 
-		if (direction == 0)
-		{
-			for (int i = 0; i < 7; i++)
-			{
-				makeSnakeSegment(new Point(p.getRow(), p.getCol() + i), snake);
-			}
-		} else
-		{
-			for (int i = 0; i < 7; i++)
-			{
-				makeSnakeSegment(new Point(p.getRow() + i, p.getCol()), snake);
-			}
+		if (direction == 0){
+			makeFirstSnakeCol(snake, p);
+		} else{
+			makeFirstSnakeRow(snake, p);
+		}
+	}
+	
+	public void makeFirstSnakeCol(Snake snake, Point p){
+		for (int i = 0; i < 7; i++){
+			makeSnakeSegment(new Point(p.getRow(), p.getCol() + i), snake);
+		}
+	}
+	
+	public void makeFirstSnakeRow(Snake snake, Point p){
+		for (int i = 0; i < 7; i++){
+			makeSnakeSegment(new Point(p.getRow() + i, p.getCol()), snake);
 		}
 	}
 
-	public void spawnMunchie(Snake snake)
-	{
+	public void spawnMunchie(Snake snake){
 		Point p = generateLoc();
-		while (!effectivePool.contains(p))
-		{
+		while (!effectivePool.contains(p)){
 			p = generateLoc();
 		}
 
@@ -131,54 +127,50 @@ public class MasterMap
 		System.out.println(p);
 	}
 
-	private void makeFree(Point p)
-	{
+	private void makeFree(Point p){
 		freePool.add(p);
 		field.setValueAt(p, freePool.size() - 1);
 	}
 
-	private void effect(Point p)
-	{
+	private void effect(Point p){
 		effectivePool.add(p);
 		field.setValueAt(p, effectivePool.size() - 1);
 	}
 
-	private void swapFree(Point p, int i)
-	{
+	private void swapFree(Point p, int i){
 		if (i >= 0){
 			freePool.set(i, p);
 			field.setValueAt(p, i);
 		}
 	}
 
-	private void swapEffect(Point p, int i)
-	{
+	private void swapEffect(Point p, int i){
 		if (i >= 0){
-			if (i >= effectivePool.size() - 1)
-			{
-				swapFree(p, i);
-				return;
-			}
+			doSwapFree(p, i);
 			effectivePool.set(i, p);
 			field.setValueAt(p, i);
 		}
 	}
 
-	private void makeSnakeSegment(Point p, Snake snake)
-	{
+	private void doSwapFree(Point p, int i){
+		if (i >= effectivePool.size() - 1){
+			swapFree(p, i);
+			return;
+		}
+	}
+	
+	private void makeSnakeSegment(Point p, Snake snake){
 		SnakeSegment seg = new SnakeSegment(p);
 		snake.addToHead(seg);
 		field.makeSegment(p);
 	}
 
-	private Point generateLoc()
-	{
+	private Point generateLoc(){
 		return effectivePool.get(getAnIdxValue(effectivePool.size() - 1));
 	}
 
 	public boolean move() { // did the worm survive the move?
-		if(player.isAlive)
-		{
+		if(player.isAlive){
 			SnakeSegment head = player.getHead();
 			Point go = dir.move(head.getPoint());
 			return finalizeMove(go);
@@ -186,8 +178,7 @@ public class MasterMap
 		return false;
 	}
 
-	public boolean finalizeMove(Point p)
-	{
+	public boolean finalizeMove(Point p){
 		Point munchieLocation = munchieOwners.get(player.getColor());
 		if (isOccupied(p)){return false;}
 		handleMunchie(p, munchieLocation);
@@ -263,8 +254,7 @@ public class MasterMap
 		}
 	}
 
-	public int getAnIdxValue(int max)
-	{ // return a value in 0..(max-1)
+	public int getAnIdxValue(int max){
 		return Math.abs(rand.nextInt(max - 1));
 	}
 
@@ -279,8 +269,7 @@ public class MasterMap
 		} return ret;
 	}
 
-	public void drawMiniMap(Graphics g, int length)
-	{
+	public void drawMiniMap(Graphics g, int length){
 		snakes.remove(getPlayerSnake());
 		snakes.add(player);
 		int scale = length / SIZE;
@@ -296,8 +285,7 @@ public class MasterMap
 		}
 	}
 
-	public void drawVisualMap(Graphics g, int coor, Snake focusSnake)
-	{
+	public void drawVisualMap(Graphics g, int coor, Snake focusSnake){
 		int scale = 10;
 		Point falseCenter = new Point(coor, coor);
 		focusSnake.getHead();
@@ -317,45 +305,35 @@ public class MasterMap
 		}
 	}
 
-	private void drawEdges(Graphics g, Point center, int length)
-	{
+	private void drawEdges(Graphics g, Point center, int length){
 		drawBackground(g, center, length);
 		g.setColor(Color.BLACK);
 		int midRow = center.getRow();
 		int midCol = center.getCol();
-		if (midRow * 10 - length <= 0)
-		{
+		if (midRow * 10 - length <= 0){
 			int dist = length - midRow * 10;
 			g.fillRect(0, 0, length * 2, dist);
-		} else if (midRow * 10 + length >= SIZE * 10)
-		{
+		} else if (midRow * 10 + length >= SIZE * 10){
 			int dist = (midRow * 10 + length) - SIZE * 10;
 			g.fillRect(0, length * 2 - dist, length * 2, dist);
 		}
-
-		if (midCol * 10 - length <= 0)
-		{
+		if (midCol * 10 - length <= 0){
 			int dist = length - midCol * 10;
 			g.fillRect(0, 0, dist, length * 2);
-		} else if (midCol * 10 + length >= SIZE * 10)
-		{
+		} else if (midCol * 10 + length >= SIZE * 10){
 			int dist = (midCol * 10 + length) - SIZE * 10;
 			g.fillRect(length * 2 - dist, 0, dist, length * 2);
 		}
 	}
 
-	private void drawBackground(Graphics g, Point center, int length)
-	{
-		Color dirt = Color.getHSBColor(0.1f, 0.5f, 0.9f).darker();
+	private void drawBackground(Graphics g, Point center, int length){
 		for(int i = 0 - center.getCol(); i < length*2; i+= 15)
 			for(int j = 0 - center.getRow(); j < length*2; j+= 15)
 				g.fillRect(i*10, j*10, 5, 5);
 	}
 
-	private void newMunchieLocation(Point point, Snake s)
-	{
-		for (Color c : munchieOwners.keySet())
-		{
+	private void newMunchieLocation(Point point, Snake s){
+		for (Color c : munchieOwners.keySet()){
 			if(point.equals(munchieOwners.get(c))){
 				int idx = getAnIdxValue(effectivePool.size() - 1);
 				munchieOwners.put(c, effectivePool.get(idx));
@@ -363,8 +341,7 @@ public class MasterMap
 		}
 	}
 
-	private boolean inEffect(Point p)
-	{
+	private boolean inEffect(Point p){
 		if (p.getRow() >= ((SIZE - effectiveSize) / 2)
 				&& p.getRow() <= ((SIZE - effectiveSize) / 2 + effectiveSize))
 		{
@@ -377,33 +354,27 @@ public class MasterMap
 		return false;
 	}
 
-	public int getSize()
-	{
+	public int getSize(){
 		return SIZE;
 	}
 
-	public Snake getMySnake()
-	{
+	public Snake getMySnake(){
 		return player;
 	}
 
-	public ArrayList<Snake> getSnakes()
-	{
+	public ArrayList<Snake> getSnakes(){
 		return snakes;
 	}
 
-	public ArrayList<Point> getFreePool()
-	{
+	public ArrayList<Point> getFreePool(){
 		return freePool;
 	}
 
-	public boolean getSnakeMade()
-	{
+	public boolean getSnakeMade(){
 		return snakeMade;
 	}
 
-	public void changeSnakeMade(boolean bool)
-	{
+	public void changeSnakeMade(boolean bool){
 		snakeMade = bool;
 	}
 
@@ -411,14 +382,12 @@ public class MasterMap
 		munchieOwners.remove(snake.getColor());
 		munchieOwners.put(snake.getColor(), newMunchie); }
 
-	public ConcurrentHashMap<Color, Point> getMunchieOwners()
-	{
+	public ConcurrentHashMap<Color, Point> getMunchieOwners(){
 		return munchieOwners;
 	}
 
 	private Point translate(Point munchLoc, Point trueCenter,
-			Point falseCenter, int scale)
-	{
+			Point falseCenter, int scale){
 		int row = falseCenter.getRow() + scale
 				* (munchLoc.getRow() - trueCenter.getRow());
 		int col = falseCenter.getCol() + scale
@@ -426,8 +395,7 @@ public class MasterMap
 		return new Point(row, col);
 	}
 
-	public void setPlayerSnake(Snake s)
-	{
+	public void setPlayerSnake(Snake s){
 		player = s;
 	}
 }
