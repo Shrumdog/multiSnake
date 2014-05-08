@@ -37,15 +37,8 @@ public class Joystick implements KeyListener, ActionListener{
 		snake = s;
 		mastermap.setPlayerSnake(snake);
 		timer = new Timer(40, this);
-		System.out.println("Joystick created");
 		playerAddresses = new ArrayList<String>();
-		//addAddress("209.65.57.21"); //<--------YOUR COMPUTER'S IP ADDRESS
 	}
-
-	// public void addConnect(Connect c)
-	// {
-	// this.c = c;
-	// }
 
 	public ArrayList<String> getPlayerAddresses() {
 		return playerAddresses;
@@ -86,11 +79,8 @@ public class Joystick implements KeyListener, ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae){
 		for(int i= 0; i<playerAddresses.size(); i++){
-			//			if(playerAddresses.size()>1){
 			Socket socket;
 			try {
-				//send in the IP address of the game that is already running
-				System.out.println("creating socket to address: " + playerAddresses.get(i));
 				socket = new Socket(playerAddresses.get(i), 8888);
 				UpdateSender sender = new UpdateSender(socket, me);
 				sender.start();
@@ -100,7 +90,6 @@ public class Joystick implements KeyListener, ActionListener{
 				e.printStackTrace();
 			}
 		}
-		//		}
 
 		if (ae.getSource() == timer){
 			snake.isAlive = mastermap.move();

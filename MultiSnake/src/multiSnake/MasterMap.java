@@ -124,7 +124,6 @@ public class MasterMap
 		}
 
 		munchieOwners.put(snake.getColor(), p);
-		System.out.println(p);
 	}
 
 	private void makeFree(Point p){

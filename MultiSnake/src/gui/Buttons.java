@@ -30,7 +30,6 @@ public class Buttons extends JPanel
 		connect = new ConnectButton("Connect", player, js);
 		play = new JButton("Join Game");
 
-		// connect.addActionListener(new Spectate());
 		play.addActionListener(new JoinGame());
 
 		add(connect);

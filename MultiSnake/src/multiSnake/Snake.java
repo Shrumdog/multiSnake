@@ -9,7 +9,6 @@ public class Snake {
 	public Color color;
 	public boolean isAlive;
 	public int length;
-	//private Point p = new Point(0,0);
 
 	public Snake() {
 		head = tail = null;
@@ -46,15 +45,6 @@ public class Snake {
 		}
 		return result;
 	}
-
-	//	public ArrayList<Point> toArray(){
-	//		ArrayList<Point> ret = new ArrayList<Point>();
-	//		ret.add(this.start().getPoint());
-	//		while(this.moreElements()){
-	//			ret.add(nextElement().getPoint());
-	//		}
-	//		return ret;
-	//	}
 
 	public boolean empty() {
 		return (head != null);

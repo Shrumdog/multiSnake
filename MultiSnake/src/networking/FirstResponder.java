@@ -35,7 +35,6 @@ public class FirstResponder extends Thread{
 		try {
 			writer = new PrintWriter (new OutputStreamWriter(socket.getOutputStream()));
 			StringBuilder infoToSend = new StringBuilder();
-			// infoToSend.append(IPAddress);
 			writer.append(infoToSend);
 			writer.flush();
 			socket.close();
@@ -51,8 +50,7 @@ public class FirstResponder extends Thread{
 	}
 
 	public String getStringUpdate(MasterMap map){
-		snakes = map.getSnakes();
-		//munchieOwners = map.getMunchieOwners();
+		snakes = map.getSnakes();;
 		for(Snake s : snakes){
 			nullPoints += s.toString() + " ";
 		}

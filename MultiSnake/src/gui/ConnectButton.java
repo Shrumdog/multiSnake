@@ -30,10 +30,8 @@ public class ConnectButton extends JButton
 	public ConnectButton(String label, Player me, Joystick happiness)
 	{
 		super(label);
-		// System.out.println("Set " + who + " to " + me);
 		player = me;
 		joy = happiness;
-		//System.out.println(player + " is " + me);
 		infoNeeded = new JPanel();
 		infoNeeded.setLayout(new GridLayout(10, 0));
 		IPAddresses = happiness.getPlayerAddresses();
@@ -85,7 +83,6 @@ public class ConnectButton extends JButton
 	{
 		Socket socket = new Socket("209.65.57.21", 8888);
 		FirstResponder first = new FirstResponder(socket, IPAddress);
-		//System.out.println("sent a firstresponder thread to the server");
 		first.start();
 	}
 
@@ -104,7 +101,6 @@ public class ConnectButton extends JButton
 			for(JTextField tf: IPFields)
 			{
 				String str = tf.getText();
-				System.out.println(str);
 				if(!str.equals(""))
 				{
 					IPAddresses.add(str);

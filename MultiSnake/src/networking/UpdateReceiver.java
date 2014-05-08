@@ -82,7 +82,6 @@ public class UpdateReceiver extends Thread{
 	
 	@SuppressWarnings("static-access")
 	public Snake toSnake(String snake){
-		//System.out.println("Snake: " + snake);
 		String[] inputs = snake.split(" ");
 		Snake snakeToReturn = new Snake();
 		for(String s : inputs){
