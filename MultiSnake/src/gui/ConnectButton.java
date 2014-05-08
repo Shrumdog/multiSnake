@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.text.Document;
 
 import multiSnake.Player;
 import networking.FirstResponder;
@@ -24,7 +23,7 @@ public class ConnectButton extends JButton
 	private Dimension textFieldSize = new Dimension(150, 20);
 	private JPanel infoNeeded;
 	private Joystick joy;
-	private JTextField IPField;
+	private ArrayList<JTextField> IPFields;
 	private ArrayList<String> IPAddresses;
 	private Player player;
 
@@ -38,7 +37,6 @@ public class ConnectButton extends JButton
 		infoNeeded = new JPanel();
 		infoNeeded.setLayout(new GridLayout(10, 0));
 		IPAddresses = happiness.getPlayerAddresses();
-		IPField = newIPField();
 		addActionListener(new Display());
 	}
 
@@ -66,9 +64,19 @@ public class ConnectButton extends JButton
 		return player;
 	}
 
-	private JTextField newIPField()
+	private void populateIPFields()
 	{
-		JTextField textField = new JTextField("");
+		IPFields = new ArrayList<JTextField>();
+		for(String ip: IPAddresses)
+		{
+			IPFields.add(createIPField(ip));
+		}
+		IPFields.add(createIPField(""));
+	}
+	
+	private JTextField createIPField(String ip)
+	{
+		JTextField textField = new JTextField(ip);
 		textField.setPreferredSize(textFieldSize);
 		return textField;
 	}
@@ -82,24 +90,27 @@ public class ConnectButton extends JButton
 	}
 
 	private void displayPrompt(){
-		infoNeeded.add(new JLabel("IP Address: "));
-		for(String ip: IPAddresses)
+		infoNeeded.add(new JLabel("IP Addresses: "));
+		populateIPFields();
+		for(JTextField tf: IPFields)
 		{
-			JLabel IPLabel = new JLabel(ip);
-			infoNeeded.add(IPLabel);
-		}
-		infoNeeded.add(IPField);
-
-		JOptionPane.showMessageDialog(null, infoNeeded, "Connection Information", JOptionPane.QUESTION_MESSAGE);
-		IPAddresses = new ArrayList<String>();
-		String str = IPField.getText();
-		System.out.println(str);
-		if(!str.equals(""))
-		{
-			IPAddresses.add(str);
-			IPField.setText("");
+			infoNeeded.add(tf);
 		}
 
+		int num = JOptionPane.showConfirmDialog(null, infoNeeded, "Connection Information", JOptionPane.OK_CANCEL_OPTION);
+		if(num == 0)
+		{
+			IPAddresses = new ArrayList<String>();
+			for(JTextField tf: IPFields)
+			{
+				String str = tf.getText();
+				System.out.println(str);
+				if(!str.equals(""))
+				{
+					IPAddresses.add(str);
+				}
+			}
+		}
 		infoNeeded.removeAll();
 	}
 
