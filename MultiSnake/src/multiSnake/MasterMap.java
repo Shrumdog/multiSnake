@@ -299,6 +299,8 @@ public class MasterMap
 			s.drawSnake(g, scale, trueCenter, falseCenter);
 			snakeMade = true;
 		}
+		g.setColor(Color.black);
+		g.drawString("Snake length: "+player.length, 8, 12);
 	}
 
 	private void drawEdges(Graphics g, Point center, int length){

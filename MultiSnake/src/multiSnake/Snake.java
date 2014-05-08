@@ -8,6 +8,7 @@ public class Snake {
 	private SnakeSegment head, tail;
 	public Color color;
 	public boolean isAlive;
+	public int length;
 	//private Point p = new Point(0,0);
 
 	public Snake() {
@@ -109,8 +110,7 @@ public class Snake {
 			g.fillOval(segLoc.getCol(), segLoc.getRow(), scale, scale);
 			seg = nextElement(seg);
 		}
-		g.setColor(Color.black);
-		g.drawString("Snake length: "+count, 8, 12);
+		this.length = count;
 	}
 
 	private Point translate(Point segLoc, Point trueCenter, Point falseCenter, int scale)

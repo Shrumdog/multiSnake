@@ -20,9 +20,11 @@ public class Point {
 	  public void setCol( int x ) { col = x; } 
 	  public int getCol() { return col; } 
 	  public boolean equals( Point p ) { 
-		  if(p.getRow() != getRow()) { return false; }
-		  else if(p.getCol() != getCol()) { return false; }
-		  else { return true; }
+		  if (p != null){
+			  if(p.getRow() != getRow()) { return false; }
+			  else if(p.getCol() != getCol()) { return false; }
+			  else { return true; }
+		  } return false;
 	  }
 	  @Override
 	  public int hashCode()
