@@ -269,8 +269,9 @@ public class MasterMap
 
 	private Snake getPlayerSnake(){
 		Snake ret = null;
-		for(int i=0; i<snakes.size(); i++){
-			Snake s = snakes.get(i);
+		ArrayList<Snake> copy = new ArrayList<Snake>(snakes);
+		for(int i=0; i<copy.size(); i++){
+			Snake s = copy.get(i);
 			if(s.getColor().equals(player.getColor())){
 				ret = s;
 			}
