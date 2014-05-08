@@ -393,10 +393,14 @@ public class MasterMap
 
 	private Point translate(Point munchLoc, Point trueCenter,
 			Point falseCenter, int scale){
-		int row = falseCenter.getRow() + scale
+		int row = -1, col = -1;
+		if (munchLoc != null && trueCenter != null){
+			row = falseCenter.getRow() + scale
 				* (munchLoc.getRow() - trueCenter.getRow());
-		int col = falseCenter.getCol() + scale
+			col = falseCenter.getCol() + scale
 				* (munchLoc.getCol() - trueCenter.getCol());
+		}
+		
 		return new Point(row, col);
 	}
 
