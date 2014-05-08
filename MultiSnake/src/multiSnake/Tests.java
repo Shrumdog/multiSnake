@@ -23,7 +23,6 @@ public class Tests
 		screen = new VisualMap(map);
 		player = new Player(screen);
 		
-//		forTheSakeOfCoverage();
 		player.startPlaying();
 		
 		player.connectListener();
@@ -36,7 +35,6 @@ public class Tests
 	@Test
 	public void snakeTest()
 	{
-		System.out.println("Snake Test");
 		Color c = Color.BLACK;
 		Snake derp = new Snake(c);
 		assertEquals(c, derp.getColor());
@@ -91,9 +89,7 @@ public class Tests
 	
 	@Test
 	public void playerTest()
-	{
-		System.out.println("Player Test");
-		
+	{	
 		assertEquals(player.getTrueMap(), map);
 		assertEquals(player.getVisualMap(), screen);
 		
@@ -110,7 +106,6 @@ public class Tests
 	@Test
 	public void snakeIterateTest()
 	{
-		System.out.println("Snake Iterate Test");
 		SnakeSegment iterSeg = snake.start(null);
 		SnakeSegment headSeg = snake.getHead();
 		iterSeg = snake.nextElement(iterSeg);
@@ -128,33 +123,9 @@ public class Tests
 		assertFalse(snake.moreElements(iterSeg));
 	}
 	
-//	@Test
-//	public void moveTest()
-//	{
-//		assertEquals(1, map.getSnakes().size());
-//		SnakeSegment headSeg = snake.getHead();
-//		SnakeSegment neckSeg = getNeck();
-//		Point headPnt = headSeg.getPoint();
-//		Point neckPnt = neckSeg.getPoint();
-//		int vert = Math.abs(headPnt.getRow() - neckPnt.getRow()) * 2;
-//		int hori = neckPnt.getCol() - headPnt.getCol() + 2;
-//		hori = hori == 2 ? hori + 1 : hori;
-//		
-//		assertTrue(move(vert));
-//		assertTrue(move((vert + 2) % 4));
-//		
-//		assertTrue(move(hori));
-//		assertTrue(move((hori + 2) % 4));
-//		assertTrue(move((vert + 2) % 4));
-//		assertTrue(move((hori + 2) % 4));
-//		assertFalse(move((hori + 2) % 4));
-//		assertFalse(move(-1));
-//	}
-	
 	@Test
 	public void moveTest()
 	{
-		System.out.println("Move Test");
 		assertEquals(1, map.getSnakes().size());
 		SnakeSegment headSeg = snake.getHead();
 		SnakeSegment neckSeg = getNeck();
@@ -178,28 +149,9 @@ public class Tests
 		assertFalse(move(map.dir));
 	}
 	
-//	@Test
-//	public void wallDeathTest()
-//	{
-//		assertEquals(1, map.getSnakes().size());
-//		SnakeSegment headSeg = snake.getHead();
-//		SnakeSegment neckSeg = getNeck();
-//		Point headPnt = headSeg.getPoint();
-//		Point neckPnt = neckSeg.getPoint();
-//		int vert = headPnt.getRow() - neckPnt.getRow();
-//		int dir = vert != 1 ? map.UP : map.DOWN;
-//		
-//		while(snake.isAlive)
-//		{
-//			move(dir);
-//		}
-//		assertFalse(move(dir));
-//	}
-	
 	@Test
 	public void wallDeathTest()
 	{
-		System.out.println("Wall Death Test");
 		assertEquals(1, map.getSnakes().size());
 		SnakeSegment headSeg = snake.getHead();
 		SnakeSegment neckSeg = getNeck();
@@ -221,7 +173,6 @@ public class Tests
 	@Test
 	public void segmentDeathTest()
 	{
-		System.out.println("Segment Death Test");
 		assertEquals(1, map.getSnakes().size());
 		SnakeSegment headSeg = snake.getHead();
 		SnakeSegment neckSeg = getNeck();
@@ -238,25 +189,6 @@ public class Tests
 		}
 		assertFalse(move(dir));
 	}
-	
-//	private SnakeSegment getNeck()
-//	{
-//		snake.start(null);
-//		SnakeSegment headSeg = snake.getHead();
-//		SnakeSegment neck = snake.nextElement();
-//		SnakeSegment nextSeg = neck.getNext();
-//		
-//		Point headPnt = headSeg.getPoint();
-//		Point nextPnt = nextSeg.getPoint();
-//		while(!headPnt.equals(nextPnt))
-//		{
-//			neck = snake.nextElement();
-//			nextSeg = neck.getNext();
-//			nextPnt = nextSeg.getPoint();
-//		}
-//		
-//		return neck;
-//	}
 	
 	private SnakeSegment getNeck()
 	{
@@ -279,59 +211,39 @@ public class Tests
 	
 	private boolean move(Direction direct)
 	{
-		System.out.println("Moving "+map.setDirection(direct.getDir().substring(0, 1).toLowerCase())+"\tRequested "+direct.getDir().substring(0, 1).toLowerCase());
+		map.setDirection(direct.getDir().substring(0, 1).toLowerCase());
 		return snake.isAlive = map.move();
 	}
 	
 	private Direction rotateClockwise(Direction direct)
 	{
-		System.out.print("Rotating... Input: "+direct);
 		switch(direct){
 			case NORTH:
-				System.out.println("\tOutput: EAST");
 				return Direction.EAST;
 			case EAST:
-				System.out.println("\tOutput: SOUTH");
 				return Direction.SOUTH;
 			case SOUTH:
-				System.out.println("\tOutput: WEST");
 				return Direction.WEST;
 			case WEST:
-				System.out.println("\tOutput: NORTH");
 				return Direction.NORTH;
 			default:
-				System.out.println("\tOutput: default");
 				return direct;
 		}
 	}
 	
 	private Direction oppositeDirection(Direction direct)
 	{
-		System.out.print("Opposite... Input: "+direct);
 		switch(direct){
 			case NORTH:
-				System.out.println("\tOutput: SOUTH");
 				return Direction.SOUTH;
 			case EAST:
-				System.out.println("\tOutput: WEST");
 				return Direction.WEST;
 			case SOUTH:
-				System.out.println("\tOutput: NORTH");
 				return Direction.NORTH;
 			case WEST:
-				System.out.println("\tOutput: EAST");
 				return Direction.EAST;
 			default:
-				System.out.println("\tOutput: default");
 				return direct;
 		}
 	}
-	
-//	private void forTheSakeOfCoverage()
-//	{
-//		new GUI();
-//		SnakeOptions o = new SnakeOptions(player);
-//		player.setName(o.getName());
-//		player.getTrueMap();
-//	}
 }
