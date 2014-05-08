@@ -145,17 +145,11 @@ public class MasterMap
 	}
 
 	private void swapEffect(Point p, int i){
-		if (i >= 0){
-			doSwapFree(p, i);
+		if (i >= 0 && i < effectivePool.size() - 1){
 			effectivePool.set(i, p);
 			field.setValueAt(p, i);
-		}
-	}
-
-	private void doSwapFree(Point p, int i){
-		if (i >= effectivePool.size() - 1){
+		} else if (i >= effectivePool.size() - 1){
 			swapFree(p, i);
-			return;
 		}
 	}
 	
@@ -173,7 +167,9 @@ public class MasterMap
 		if(player.isAlive){
 			SnakeSegment head = player.getHead();
 			Point go = dir.move(head.getPoint());
-			return finalizeMove(go);
+			if (inBounds(go)){
+				return finalizeMove(go);
+			}
 		}
 		return false;
 	}
@@ -215,7 +211,7 @@ public class MasterMap
 		if (inEffect(p)){
 			swapEffect(effectivePool.get(effectivePool.size() - 1), field.valueAt(p));
 			effectivePool.remove(effectivePool.size() - 1);
-		} else{
+		} else if (inBounds(p)){
 			swapFree(freePool.get(freePool.size() - 1), field.valueAt(p));
 			freePool.remove(freePool.size() - 1);
 		}
@@ -227,7 +223,7 @@ public class MasterMap
 		Point temp = s.rmTail().getPoint();
 		if (inEffect(p)) {
 			effectiveShrinker(remove, temp, p);
-		} else {
+		} else if (inBounds(p)){
 			freeShrinker(remove, temp, p);
 		}
 		if(s.equals(player)){growthVal++;}
@@ -249,7 +245,7 @@ public class MasterMap
 		Point temp = s.rmTail().getPoint();
 		if (inEffect(p)) {
 			swapEffect(temp, field.valueAt(p));
-		} else {
+		} else if (inBounds(p)) {
 			swapFree(temp, field.valueAt(p));
 		}
 	}
@@ -352,6 +348,14 @@ public class MasterMap
 			}
 		}
 		return false;
+	}
+	
+	private boolean inBounds(Point p){
+		if (p.getRow() >= 0 && p.getRow() < SIZE){
+			if (p.getCol() >= 0 && p.getCol() < SIZE){
+				return true;
+			}
+		} return false;
 	}
 
 	public int getSize(){
