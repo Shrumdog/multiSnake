@@ -253,20 +253,7 @@ public class MasterMap
 		return Math.abs(rand.nextInt(max - 1));
 	}
 
-	private Snake getPlayerSnake(){
-		Snake ret = null;
-		ArrayList<Snake> copy = new ArrayList<Snake>(snakes);
-		for(int i=0; i<copy.size(); i++){
-			Snake s = copy.get(i);
-			if(s.getColor().equals(player.getColor())){
-				ret = s;
-			}
-		} return ret;
-	}
-
 	public void drawMiniMap(Graphics g, int length){
-		snakes.remove(getPlayerSnake());
-		snakes.add(player);
 		int scale = length / SIZE;
 		Color c;
 		Point m;
