@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -81,14 +82,16 @@ public class Joystick implements KeyListener, ActionListener{
 		for(int i= 0; i<playerAddresses.size(); i++){
 			Socket socket;
 			try {
+				try{
 				socket = new Socket(playerAddresses.get(i), 8888);
 				UpdateSender sender = new UpdateSender(socket, me);
 				sender.start();
+				} catch (ConnectException e){}
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
+			} 
 		}
 
 		if (ae.getSource() == timer){
